@@ -2,15 +2,16 @@ import random
 
 class SentimentModelInteractor:
     
-    # 1. Init Metodu (Başlatıcı)
+    # 1. Init Metodu (başlatıcı)
     def __init__(self):
         # ml model ile etkileşim kuran aşama bu
         # interactor kahve makinesi oluyor 
         print("Log: Yapay zeka modeli(mock)eklendi.")
     
-    # 2. Predict Metodu (Tahminci)
-    # DİKKAT: Bu fonksiyon __init__'in içinde değil, onunla AYNI HİZADA (Kardeş)
-    # DİKKAT: Adı __predict__ değil, sadece 'predict'
+    # 2. Predict Metodu tamhin edecek 
+    #ilerde buraya hugging face eklenecek çalışan bir sistem
+    
+    
     def predict(self, text: str) -> dict:
         
         # gelen metni modele verir ve ham (raw) sonucu döndürür

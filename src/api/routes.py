@@ -11,8 +11,8 @@ sentiment_service = SentimentService()
 
 def analyze_sentiment(request:SentimentRequest):
     try:
-        saf_metin = request.text
-        result = sentiment_service.analyze_text(saf_metin)
+        saf_metin = request.text #bu safe
+        result = sentiment_service.analyze_text(saf_metin) #burda patlama olabilir yanlış hesaplama model sıkıntısı vsvs
         return result
     
     except Exception as e:
