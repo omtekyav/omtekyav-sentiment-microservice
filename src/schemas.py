@@ -14,5 +14,5 @@ class SentimentRequest(BaseModel):
     
 #çıkış model(Response)
 class SentimentResponse(BaseModel):
-    sentimet: str = Field(..., description="Duygu sonucu(Pozitif/Negatif/Nötr)")
+    sentiment: str = Field(..., description="Duygu sonucu(Pozitif/Negatif/Nötr)")
     confidence: float  =Field(..., description="Güven skoru : (0.0-1.0)")
