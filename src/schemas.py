@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field , field_validator
 
 #giriş modeli (REQUEST)
 
@@ -13,6 +13,17 @@ class SentimentRequest(BaseModel):
     )
     
 #çıkış model(Response)
+    @field_validator('text')
+    @classmethod
+
+    def check_not_empty(cls,v:str): #ilk parametre sınıfın kendisi olacak v : value > bunlar
+        if not v.strip():
+            raise ValueError('Metin boşluklardan oluşamaz anlamlı bir metin giriniz.')
+        return v
+
+
+
+
 class SentimentResponse(BaseModel):
     sentiment: str = Field(..., description="Duygu sonucu(Pozitif/Negatif/Nötr)")
     confidence: float  =Field(..., description="Güven skoru : (0.0-1.0)")
