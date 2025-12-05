@@ -1,7 +1,7 @@
 
 ## business logic
 
-from src.model.sentiment_model import SentimentModelInteractor
+from src.model.sentiment_model import SentimentModel
 from src.schemas import SentimentResponse
 
 
@@ -10,7 +10,7 @@ from src.schemas import SentimentResponse
 
 class SentimentService:
     def __init__(self):
-        self.interactor = SentimentModelInteractor()
+        self.model = SentimentModel()
 
         self.negative_keywords = {"kötü", "berbat", "çöp", "beğenmedim", "pişman", "problem", "bozuk", "hata", "memnun değilim", "tavsiye etmem"}
         
@@ -32,12 +32,12 @@ class SentimentService:
         #klasik yapay zeka kontrolü
 
         #makiniye sorulacak kısım self.interactor'dan predict cleantext'i tahmin edecek ve sonuc döndürecek
-        prediction = self.interactor.predict(clean_text) # zor iş tahmin işini interactore devrettik
+        prediction = self.model.predict(clean_text) # zor iş tahmin işini interactore devrettik
 
         return SentimentResponse(
 
-        sentiment = prediction["label"],    
-        confidence= prediction["score"],
+        sentiment = prediction["sentiment"],    
+        confidence= prediction["confidence"],
 
     )
 
