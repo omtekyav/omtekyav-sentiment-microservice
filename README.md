@@ -9,7 +9,7 @@ FastAPI backend ve Streamlit frontend ile oluşturulmuş, Docker Compose ile con
 ### Kurulum
 ```bash
 # 1. Repository'yi klonlayın
-git clone https://github.com/your-username/sentiment-analysis-microservice.git
+git clone https://github.com/omtekyav/omtekyav-sentiment-microservice.git
 cd sentiment-analysis-microservice
 
 # 2. Hugging Face modelini indirin (ilk kurulum)
@@ -327,10 +327,11 @@ pre-commit install
 
 ## 📞 Destek ve İletişim
 
-- **Issue Tracker:** [GitHub Issues](https://github.com/your-username/sentiment-analysis-microservice/issues)
+- **Issue Tracker:** [GitHub Issues](https://github.com/omtekyav/omtekyav-sentiment-microservice.git)
 - **Documentation:** [API Docs](http://localhost:8000/docs)
 - **Model Card:** [Hugging Face](https://huggingface.co/savasy/bert-base-turkish-sentiment-cased)
 
 ---
 
 *Son Güncelleme: Ocak 2024 | Versiyon: 1.0.0*
+
