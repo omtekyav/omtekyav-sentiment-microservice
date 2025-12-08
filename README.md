@@ -8,21 +8,22 @@ FastAPI backend ve Streamlit frontend ile oluşturulmuş, Docker Compose ile con
 
 ### Kurulum
 ```bash
-# 1. Repository'yi klonlayın
+# 1. Önce projeyi indir
 git clone https://github.com/omtekyav/omtekyav-sentiment-microservice.git
-cd sentiment-analysis-microservice
 
-# 2. Hugging Face modelini indirin (ilk kurulum)
-python download_model.py
+# 2. İndirdiğin klasörünün içine gir.
+cd omtekyav-sentiment-microservice
 
-# 3. Docker konteynerlerini başlatın
+# 3. Şimdi modeli indir
+python indir.py
+
+# Docker'ı başlat(docker desktop app açık olması lazım)
 docker-compose up --build
 ```
 
 ### Erişim
 - **Web Arayüzü:** [http://localhost:8501](http://localhost:8501)
 - **API Dokümantasyonu:** [http://localhost:8000/docs](http://localhost:8000/docs)
-- **API Health Check:** [http://localhost:8000/health](http://localhost:8000/health)
 
 ---
 
@@ -40,16 +41,22 @@ docker-compose up --build
 
 ### Servis Yapısı
 ```
-sentiment-analysis-microservice/
-├── backend/           # FastAPI mikroservisi
-│   ├── app.py         # API endpoint'leri
-│   ├── model/         # Fine-tuned BERT modeli
-│   └── Dockerfile     # Backend container tanımı
-├── frontend/          # Streamlit arayüzü
-│   ├── app.py         # Web arayüzü
-│   └── Dockerfile     # Frontend container tanımı
-├── docker-compose.yml # Multi-container orkestrasyon
-└── download_model.py  # Model indirme scripti
+omtekyav-sentiment-microservice/
+├── src/                          # Kaynak kodlar
+│   ├── model/                    # Model yönetimi
+│   │   └── sentiment_model.py    # Model sınıfı ve tahmin mantığı
+│   ├── model_files/              # İndirilen BERT model dosyaları
+│   ├── ui/                       # Streamlit kullanıcı arayüzü
+│   │   └── app.py                # Web arayüz ana dosyası
+│   ├── main.py                   # FastAPI backend giriş noktası
+│   ├── services.py               # İş mantığı katmanı
+│   └── schemas.py                # Pydantic veri modelleri
+├── docker-compose.yml            # Multi-container orkestrasyon
+├── Dockerfile                    # Backend API container tanımı
+├── Dockerfile.ui                 # Frontend UI container tanımı
+├── indir.py                      # Model indirme scripti
+├── requirements.txt              # Backend Python bağımlılıkları
+└── requirements-ui.txt           # Frontend Python bağımlılıkları
 ```
 
 ### Teknoloji Stack'i
@@ -173,14 +180,6 @@ curl http://localhost:8000/health
 curl http://localhost:8000/api/v1/model-info
 ```
 
-### Performans Testi
-```bash
-# Load testing (örn. Apache Bench)
-ab -n 100 -c 10 -p test_data.json -T application/json \
-  http://localhost:8000/api/v1/analyze
-```
-
----
 
 ## 🚨 Sorun Giderme
 
@@ -275,39 +274,6 @@ app.add_middleware(
 
 ---
 
-## 📊 Model Performansı
-
-### Doğruluk Metrikleri
-| Dataset | Accuracy | Precision | Recall | F1-Score |
-|---------|----------|-----------|--------|----------|
-| Turkish Movie Reviews | 92.3% | 91.8% | 92.1% | 91.9% |
-| Product Reviews | 89.7% | 90.2% | 88.9% | 89.5% |
-
-### Örnek Çıktılar
-```json
-{
-  "positive_example": {
-    "text": "Müşteri hizmetleri çok ilgili ve hızlıydı",
-    "sentiment": "positive",
-    "confidence": 0.97
-  },
-  "negative_example": {
-    "text": "Ürün beklentilerimin çok altında kaldı",
-    "sentiment": "negative", 
-    "confidence": 0.93
-  }
-}
-```
-
----
-
-## 🤝 Katkıda Bulunma
-
-1. Repository'yi fork edin
-2. Feature branch oluşturun (`git checkout -b feature/improvement`)
-3. Değişikliklerinizi commit edin (`git commit -am 'Add new feature'`)
-4. Branch'inize push edin (`git push origin feature/improvement`)
-5. Pull Request oluşturun
 
 ### Development Setup
 ```bash
@@ -325,7 +291,7 @@ pre-commit install
 
 ---
 
-## 📞 Destek ve İletişim
+##  Destek ve İletişim
 
 - **Issue Tracker:** [GitHub Issues](https://github.com/omtekyav/omtekyav-sentiment-microservice.git)
 - **Documentation:** [API Docs](http://localhost:8000/docs)
@@ -334,4 +300,5 @@ pre-commit install
 ---
 
 *Son Güncelleme: Ocak 2024 | Versiyon: 1.0.0*
+
 
