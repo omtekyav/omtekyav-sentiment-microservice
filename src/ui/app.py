@@ -1,6 +1,14 @@
+import os
 import streamlit as st
 import requests
 import pandas as pd
+
+# --- AYARLAR (DOCKER UYUMLULUĞU İÇİN KRİTİK KISIM) ---
+# Docker'dan gelen 'API_URL' ortam değişkenini al. 
+# Eğer yoksa (lokalde çalışıyorsan) varsayılan olarak localhost'u kullan.
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000/api/v1/analyze")
+# İstatistik URL'sini de ana URL'den türetelim
+STATS_URL = API_URL.replace("analyze", "stats")
 
 # 1. Sayfa Ayarları
 st.set_page_config(
@@ -14,8 +22,8 @@ with st.sidebar:
     st.header("📊 Canlı İstatistikler")
     
     try:
-        # Backend'den istatistikleri çekme kısmı burası
-        response = requests.get("http://127.0.0.1:8000/api/v1/stats")
+        # GÜNCELLEME: Artık dinamik URL kullanıyoruz
+        response = requests.get(STATS_URL)
         
         if response.status_code == 200:
             stats = response.json()
@@ -30,7 +38,7 @@ with st.sidebar:
             }
             df = pd.DataFrame(chart_data)
             
-            # Bar Grafiği (X ekseni: Duygu, Y ekseni: Adet)
+            # Bar Grafiği
             st.bar_chart(df.set_index("Duygu"))
             
         else:
@@ -39,6 +47,8 @@ with st.sidebar:
     except Exception as e:
         st.warning("Backend sunucusuna bağlanılamıyor.")
         st.caption(f"Hata: {e}")
+        # Debug için URL'i gösterelim (Gerekirse açarsın)
+        # st.caption(f"Denenen Adres: {STATS_URL}")
 
     st.divider()
     st.info("Bu panel, FastAPI servisine bağlıdır.")
@@ -64,10 +74,11 @@ if analyze_btn:
     else:
         with st.spinner("Yapay Zeka düşünüyor..."):
             try:
+                # GÜNCELLEME: Artık dinamik API_URL kullanıyoruz
                 response = requests.post(
-                    "http://127.0.0.1:8000/api/v1/analyze",
+                    API_URL,
                     json={"text": user_input},
-                    timeout=10
+                    timeout=120
                 )
 
                 if response.status_code == 200:
@@ -90,3 +101,4 @@ if analyze_btn:
 
             except Exception as e:
                 st.error(f"Bağlantı hatası: {e}")
+                st.caption(f"Denenen Adres: {API_URL}")

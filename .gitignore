@@ -205,3 +205,8 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Model dosyalarını Git'e atma (Çok büyükler!)
+src/model_files/
+*.bin
+*.safetensors

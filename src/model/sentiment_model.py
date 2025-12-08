@@ -7,7 +7,7 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 class SentimentModel():
     def __init__(self):
         
-        self.model_name = "savasy/bert-base-turkish-sentiment-cased"
+        self.model_name = "src/model_files"
         self.model = None
         self.tokenizer = None
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
