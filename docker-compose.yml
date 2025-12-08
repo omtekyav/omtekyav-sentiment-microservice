@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # 1. SERVİS: BACKEND (API)
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sentiment-backend
+    ports:
+      - "8000:8000"
+    networks:
+      - sentiment-net
+    # Konteyner her kapandığında otomatik yeniden başlasın mı? (Opsiyonel)
+    restart: unless-stopped
+
+  # 2. SERVİS: FRONTEND (Streamlit)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.ui
+    container_name: sentiment-frontend
+    ports:
+      - "8501:8501"
+    networks:
+      - sentiment-net
+    environment:
+      # Docker Compose içinde servis adıyla (backend) çağırabiliriz
+      - API_URL=http://backend:8000/api/v1/analyze
+    depends_on:
+      - backend  # Backend hazır olmadan Frontend çalışmaya başlamasın
+
+# 3. AĞ AYARLARI
+networks:
+  sentiment-net:
+    driver: bridge
