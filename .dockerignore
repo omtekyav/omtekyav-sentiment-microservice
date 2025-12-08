@@ -1,0 +1,9 @@
+# Sanal ortam klasörünü kopyalama (Linux kendi ortamını kuracak)
+venv/
+.venv/
+
+# Gereksiz önbellek dosyalarını kopyalama
+__pycache__/
+*.pyc
+.git/
+.vscode/
