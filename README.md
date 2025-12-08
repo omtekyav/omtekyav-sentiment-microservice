@@ -25,6 +25,10 @@ docker-compose up --build
 - **Web Arayüzü:** [http://localhost:8501](http://localhost:8501)
 - **API Dokümantasyonu:** [http://localhost:8000/docs](http://localhost:8000/docs)
 
+ **Uygulamayı açmak için şu adresi kullanın:**
+ **http://localhost:8501**
+<img width="1888" height="437" alt="image" src="https://github.com/user-attachments/assets/bc2264e7-1c7e-429b-9304-d337eee84e53" />
+
 ---
 
 ## 📋 Sistem Gereksinimleri
@@ -300,5 +304,6 @@ pre-commit install
 ---
 
 *Son Güncelleme: Ocak 2024 | Versiyon: 1.0.0*
+
 
 
