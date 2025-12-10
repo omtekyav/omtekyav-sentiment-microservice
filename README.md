@@ -303,7 +303,7 @@ pre-commit install
 
 ---
 
-*Son Güncelleme: Ocak 2024 | Versiyon: 1.0.0*
+*Son Güncelleme: Aralık 2025 | Versiyon: 1.0.0*
 
 
 
