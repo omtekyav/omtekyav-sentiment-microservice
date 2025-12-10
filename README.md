@@ -47,21 +47,31 @@ docker-compose up --build
 ### Servis Yapısı
 ```
 omtekyav-sentiment-microservice/
-├── src/                          # Kaynak kodlar
-│   ├── model/                    # Model yönetimi
-│   │   └── sentiment_model.py    # Model sınıfı ve tahmin mantığı
-│   ├── model_files/              # İndirilen BERT model dosyaları
-│   ├── ui/                       # Streamlit kullanıcı arayüzü
-│   │   └── app.py                # Web arayüz ana dosyası
-│   ├── main.py                   # FastAPI backend giriş noktası
-│   ├── services.py               # İş mantığı katmanı
-│   └── schemas.py                # Pydantic veri modelleri
-├── docker-compose.yml            # Multi-container orkestrasyon
-├── Dockerfile                    # Backend API container tanımı
-├── Dockerfile.ui                 # Frontend UI container tanımı
-├── indir.py                      # Model indirme scripti
-├── requirements.txt              # Backend Python bağımlılıkları
-└── requirements-ui.txt           # Frontend Python bağımlılıkları
+├── .github/
+│   └── workflows/
+│       └── test.yml          # CI/CD Otomasyonu (GitHub Actions)
+├── images/                   # Dokümantasyon ekran görüntüleri
+├── src/                      # Kaynak kodlar
+│   ├── api/
+│   │   └── routes.py         # API Endpoint'leri ve Router yapısı
+│   ├── model/
+│   │   └── sentiment_model.py # BERT Modeli ve Tahminleme Sınıfı
+│   ├── model_files/          # İndirilen Model Dosyaları (Git'te yok, lokalde oluşur)
+│   ├── ui/
+│   │   └── app.py            # Streamlit Frontend Arayüzü
+│   ├── main.py               # FastAPI Giriş Noktası ve Konfigürasyon
+│   ├── schemas.py            # Pydantic Veri Modelleri (Request/Response)
+│   └── services.py           # İş Mantığı (Business Logic)
+├── tests/                    # Test Klasörü
+│   ├── __init__.py
+│   └── test_api.py           # API Testleri (Mocking & Dependency Injection)
+├── docker-compose.yml        # Konteyner Orkestrasyonu (Tek komutla başlatma)
+├── Dockerfile                # Backend İmaj Tarifi (Optimize: Slim + Non-root)
+├── Dockerfile.ui             # Frontend İmaj Tarifi
+├── indir.py                  # Modeli HuggingFace'den indiren script
+├── pytest.ini                # Pytest Konfigürasyon Dosyası
+├── requirements.txt          # Backend Bağımlılıklar
+└── requirements-ui.txt       # Frontend Bağımlılıklar
 ```
 
 ### Teknoloji Stack'i
@@ -305,6 +315,7 @@ pre-commit install
 ---
 
 *Son Güncelleme: Aralık 2025 | Versiyon: 1.0.0*
+
 
 
 
