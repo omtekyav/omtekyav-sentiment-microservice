@@ -1,3 +1,4 @@
+![Test Pipeline](https://github.com/omtekyav/omtekyav-sentiment-microservice/actions/workflows/test.yml/badge.svg)
 # 🎭 Türkçe Duygu Analizi Mikroservisi
 
 FastAPI backend ve Streamlit frontend ile oluşturulmuş, Docker Compose ile containerize edilmiş Türkçe metin duygu analizi mikroservis mimarisi. Model olarak `savasy/bert-base-turkish-sentiment-cased` kullanılmaktadır.
