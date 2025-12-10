@@ -1,0 +1,52 @@
+name: Test Pipeline 🧪
+
+# Ne zaman çalışsın?
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+# Ne yapsın?
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Kodu Çek
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # 2. Python Kur
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+        cache: 'pip' # Bağımlılıkları önbelleğe al (Hızlandırır)
+
+    # 3. Bağımlılıkları Yükle
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # requirements.txt varsa yükle
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        # Test araçlarını yükle (requirements.txt içinde yoksa diye)
+        pip install pytest pytest-cov httpx
+
+    # 4. Model Klasörünü Oluştur (Hata almamak için)
+    - name: Create Model Directory
+      run: mkdir -p src/model_files
+
+    # 5. Testleri Çalıştır
+    - name: Run Tests with Pytest
+      run: |
+        # -v: Detaylı çıktı
+        # --cov: Kapsama raporu (src klasörü için)
+        # --cov-report=xml: Codecov için rapor üret
+        pytest -v --cov=src --cov-report=xml
+    
+    # 6. (Opsiyonel) Codecov'a Rapor Gönder
+    # - name: Upload coverage to Codecov
+    #   uses: codecov/codecov-action@v4
+    #   env:
+    #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
