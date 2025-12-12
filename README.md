@@ -1,5 +1,28 @@
 ![Test Pipeline](https://github.com/omtekyav/omtekyav-sentiment-microservice/actions/workflows/test.yml/badge.svg)
+
+<div align="center">
+
 # 🎭 Türkçe Duygu Analizi Mikroservisi
+### Production-Ready Turkish Sentiment Analysis Architecture
+
+**Analiz Et. Sınıflandır. Ölçekle.**
+<br>
+FastAPI backend, Streamlit frontend ve BERT mimarisi ile güçlendirilmiş, Dockerize edilmiş duygu analizi servisi.
+
+[![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.95-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.22-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![Build Status](https://github.com/omtekyav/omtekyav-sentiment-microservice/actions/workflows/test.yml/badge.svg)](https://github.com/omtekyav/omtekyav-sentiment-microservice/actions)
+[![License](https://img.shields.io/badge/license-MIT-yellow)](./LICENSE)
+
+[🔴 Canlı Demo (Local)](http://localhost:8501) · [🐞 Hata Bildir](https://github.com/omtekyav/omtekyav-sentiment-microservice/issues) · [✨ Özellik İste](https://github.com/omtekyav/omtekyav-sentiment-microservice/issues)
+
+
+</div>
+
+---
 
 FastAPI backend ve Streamlit frontend ile oluşturulmuş, Docker Compose ile containerize edilmiş Türkçe metin duygu analizi mikroservis mimarisi. Model olarak `savasy/bert-base-turkish-sentiment-cased` kullanılmaktadır.
 
@@ -315,6 +338,7 @@ pre-commit install
 ---
 
 *Son Güncelleme: Aralık 2025 | Versiyon: 1.0.0*
+
 
 
 
