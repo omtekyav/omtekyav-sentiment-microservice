@@ -2,7 +2,7 @@
 
 <div align="center">
 
-# 🎭 Türkçe Duygu Analizi Mikroservisi
+#  Türkçe Duygu Analizi Mikroservisi
 ### Production-Ready Turkish Sentiment Analysis Architecture
 
 **Analiz Et. Sınıflandır. Ölçekle.**
@@ -17,7 +17,7 @@ FastAPI backend, Streamlit frontend ve BERT mimarisi ile güçlendirilmiş, Dock
 [![Build Status](https://github.com/omtekyav/omtekyav-sentiment-microservice/actions/workflows/test.yml/badge.svg)](https://github.com/omtekyav/omtekyav-sentiment-microservice/actions)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](./LICENSE)
 
-[🔴 Canlı Demo (Local)](http://localhost:8501) · [🐞 Hata Bildir](https://github.com/omtekyav/omtekyav-sentiment-microservice/issues) · [✨ Özellik İste](https://github.com/omtekyav/omtekyav-sentiment-microservice/issues)
+[ Canlı Demo (Local)](http://localhost:8501) · [ Hata Bildir](https://github.com/omtekyav/omtekyav-sentiment-microservice/issues) · [ Özellik İste](https://github.com/omtekyav/omtekyav-sentiment-microservice/issues)
 
 
 </div>
@@ -28,7 +28,7 @@ FastAPI backend ve Streamlit frontend ile oluşturulmuş, Docker Compose ile con
 
 ---
 
-## 🚀 Hızlı Başlangıç
+##  Hızlı Başlangıç
 
 ### Kurulum
 ```bash
@@ -55,7 +55,7 @@ docker-compose up --build
 
 ---
 
-## 📋 Sistem Gereksinimleri
+##  Sistem Gereksinimleri
 
 - **Docker Engine:** 20.10+ 
 - **Docker Compose:** 2.0+
@@ -65,7 +65,7 @@ docker-compose up --build
 
 ---
 
-## 🏗️ Mimarisi
+##  Mimarisi
 
 ### Servis Yapısı
 ```
@@ -108,7 +108,7 @@ omtekyav-sentiment-microservice/
 
 ---
 
-## 🔌 API Endpoints
+##  API Endpoints
 
 ### 1. Duygu Analizi
 ```http
@@ -142,7 +142,7 @@ GET /api/v1/model-info
 
 ---
 
-## 🐳 Container Yönetimi
+##  Container Yönetimi
 
 ### Temel Komutlar
 ```bash
@@ -179,7 +179,7 @@ docker volume create model-storage
 
 ---
 
-## 🔧 Konfigürasyon
+##  Konfigürasyon
 
 ### Environment Variables
 ```env
@@ -202,7 +202,7 @@ API_BASE_URL=http://backend:8000
 
 ---
 
-## 🧪 Test ve Validasyon
+##  Test ve Validasyon
 
 ### API Testleri
 ```bash
@@ -219,7 +219,7 @@ curl http://localhost:8000/api/v1/model-info
 ```
 
 
-## 🚨 Sorun Giderme
+##  Sorun Giderme
 
 ### Sık Karşılaşılan Sorunlar
 
@@ -269,7 +269,7 @@ docker-compose exec backend ping frontend
 
 ---
 
-## 📈 Performans Optimizasyonu
+##  Performans Optimizasyonu
 
 ### Önerilen Ayarlar
 1. **Model Caching:** Transformers cache mekanizması aktif
@@ -291,7 +291,7 @@ services:
 
 ---
 
-## 🔐 Güvenlik
+##  Güvenlik
 
 ### Best Practices
 1. **API Rate Limiting:** Implement rate limiting middleware
@@ -338,6 +338,7 @@ pre-commit install
 ---
 
 *Son Güncelleme: Aralık 2025 | Versiyon: 1.0.0*
+
 
 
 
