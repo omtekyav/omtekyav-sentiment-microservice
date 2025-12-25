@@ -1,24 +1,40 @@
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import os
+import shutil
 
-# Model ve Tokenizer'ı belirle
-model_name = "savasy/bert-base-turkish-sentiment-cased"
-save_directory = "./src/model_files"  # Senin logundaki klasör yolu
+# 🌍 MULTILINGUAL MODEL (TR/EN/DE/FR/ES)
+model_name = "nlptown/bert-base-multilingual-uncased-sentiment"
+save_directory = "./src/model_files"
 
-print(f"⏳ '{model_name}' modeli indiriliyor... (440 MB)")
-print("Bu işlem internet hızına göre 1-5 dakika sürebilir. Lütfen bekleyin...")
+print(f"🌍 Multilingual model indiriliyor: {model_name}")
+print("⏳ Bu işlem internet hızına göre 2-5 dakika sürebilir...")
 
-# Klasör yoksa oluştur
-if not os.path.exists(save_directory):
-    os.makedirs(save_directory)
+# Eski model varsa temizle
+if os.path.exists(save_directory):
+    try:
+        shutil.rmtree(save_directory)
+        print("🧹 Eski model dosyaları temizlendi")
+    except Exception as e:
+        print(f"⚠️ Temizleme hatası (devam ediliyor): {e}")
+
+# Klasör oluştur
+os.makedirs(save_directory, exist_ok=True)
 
 # İndir ve kaydet
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForSequenceClassification.from_pretrained(model_name)
-
-tokenizer.save_pretrained(save_directory)
-model.save_pretrained(save_directory)
-
-print(f"✅ BAŞARILI! Dosyalar '{save_directory}' klasörüne kaydedildi.")
-# "Silebilirsin" mesajını sildim ki kafa karışmasın :)
-print("Bu dosya projenin bir parçasıdır, silmeyiniz.")
+try:
+    print("📥 Tokenizer indiriliyor...")
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    
+    print("📥 Model indiriliyor...")
+    model = AutoModelForSequenceClassification.from_pretrained(model_name)
+    
+    print("💾 Kaydediliyor...")
+    tokenizer.save_pretrained(save_directory)
+    model.save_pretrained(save_directory)
+    
+    print(f"✅ MODEL HAZIR! Dosyalar: {save_directory}")
+    print("🌍 Desteklenen diller: TR, EN, DE, FR, ES, NL")
+    
+except Exception as e:
+    print(f"❌ İndirme hatası: {e}")
+    raise

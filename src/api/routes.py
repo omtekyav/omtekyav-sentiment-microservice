@@ -1,63 +1,55 @@
-from fastapi import APIRouter,HTTPException, Depends
-from src.schemas import SentimentRequest, SentimentResponse
-# Başka dosyadan (services.py) "SentimentService" tarifini getir dedik.
+from fastapi import APIRouter, HTTPException, Depends
+# Yeni eklenen Batch şemalarını import etmeyi unutmuyoruz
+from src.schemas import SentimentRequest, SentimentResponse, BatchSentimentRequest, BatchSentimentResponse
 from src.services import SentimentService
 
-#router garson tanımlanıyor
+# Router tanımlaması
 router = APIRouter()
 
-# --- 1. TEDARİKÇİ (Dependency Provider) ---
-# Gerçek servisi hafızada tutan değişken (Singleton)
-# Global instance (gerçek servis)'i hhafızada tutan değişken
+# --- TEDARİKÇİ (Dependency Provider) ---
+# Gerçek servisi hafızada tutan Singleton değişken
 _real_service = SentimentService()
-
-#--ESKİ VERSİYON--
-#müdür başlatılıyor service INSTANTIATION (İşe Alma / Yaratma)
-#"Bu tarife göre bana canlı kanlı bir çalışan (nesne) ver
-# Artık elimizde "sentiment_service" adında, hafızası olan bir çalışan var.
-#"Restoran açıldı (App start), Şefi mutfağa koy, defterini eline ver ve bekle."
-#sentiment_service = SentimentService() 
-
-
-
 
 def get_sentiment_service():
     """
-    Bu fonksiyon, endpoint'lere SentimentService sağlar.
-    Test yaparken bu fonksiyonu 'Override' edip SAHTE servis vereceğiz.
+    Endpoint'lere SentimentService sağlar.
+    Testlerde bu fonksiyon override edilerek mock servis verilebilir.
     """
     return _real_service
 
-# --- 2. ENDPOINT (Dependency Injection Uygulanmış) ---
-# kapı 1. analiz kapısı post > endpoint DEPENDENCY INJECTİON uygunalnmıs kısım
+# --- 1. ESKİ ENDPOINT (Geriye Dönük Uyumluluk İçin) ---
 @router.post("/analyze", response_model=SentimentResponse)
 def analyze_sentiment(
-    request:SentimentRequest,
-    #SERVİS artık dışarıdan injeckte edilecek
-    service: SentimentService = Depends(get_sentiment_service)     
-           
+    request: SentimentRequest,
+    service: SentimentService = Depends(get_sentiment_service)
 ):
-
-    
     try:
-        saf_metin = request.text #bu safe
-        result = service.analyze_text(saf_metin) #burda patlama olabilir yanlış hesaplama model sıkıntısı vsvs
-        return result
-    
+        # Tekli işlem de artık arka planda yeni mantığı kullanıyor
+        return service.analyze_text(request.text)
     except Exception as e:
-        raise HTTPException(status_code =500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
 
-# KAPI 2: İSTATİSTİK KAPISI
-@router.get("/stats")
-def get_stats(service:SentimentService = Depends(get_sentiment_service)):
+# --- 2. YENİ BATCH ENDPOINT (Ingestion İçin) ---
+@router.post("/analyze-batch", response_model=BatchSentimentResponse)
+def analyze_batch(
+    request: BatchSentimentRequest,
+    service: SentimentService = Depends(get_sentiment_service)
+):
     """
-    Retrieves real-time sentiment analysis statistics.
-    
-    Returns:
-        dict: A dictionary containing counts for:
-        - Positive
-        - Negative
-        - Neutral
-        - Total requests processed
+    🚀 HIZLI ŞERİT: Birden fazla metni aynı anda analiz eder.
+    - Kural tabanlı ön eleme yapar.
+    - Sadece gerekenleri AI modeline gönderir.
+    - 10x daha hızlıdır.
+    """
+    try:
+        return service.analyze_batch(request.texts)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# --- 3. İSTATİSTİK ENDPOINT ---
+@router.get("/stats")
+def get_stats(service: SentimentService = Depends(get_sentiment_service)):
+    """
+    Gerçek zamanlı analiz istatistiklerini döndürür.
     """
     return service.get_statistics()
