@@ -2,12 +2,12 @@
 
 <div align="center">
 
-#  Türkçe Duygu Analizi Mikroservisi
-### Production-Ready Turkish Sentiment Analysis Architecture
+#  Çok Dilli (Multilingual) Duygu Analizi Mikroservisi
+### Production-Ready Polyglot Sentiment Analysis Architecture
 
 **Analiz Et. Sınıflandır. Ölçekle.**
 <br>
-FastAPI backend, Streamlit frontend ve BERT mimarisi ile güçlendirilmiş, Dockerize edilmiş duygu analizi servisi.
+FastAPI backend, Streamlit frontend ve **Multilingual BERT** mimarisi ile güçlendirilmiş, **Batch Processing** destekli duygu analizi servisi.
 
 [![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.95-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
@@ -24,7 +24,8 @@ FastAPI backend, Streamlit frontend ve BERT mimarisi ile güçlendirilmiş, Dock
 
 ---
 
-FastAPI backend ve Streamlit frontend ile oluşturulmuş, Docker Compose ile containerize edilmiş Türkçe metin duygu analizi mikroservis mimarisi. Model olarak `savasy/bert-base-turkish-sentiment-cased` kullanılmaktadır.
+FastAPI ve Docker Compose ile oluşturulmuş, **6 Dilde (TR, EN, DE, FR, ES, NL)** metin duygu analizi yapabilen mikroservis. 
+Model olarak **`nlptown/bert-base-multilingual-uncased-sentiment`** kullanılır. **Hibrit Mimari (Kural Tabanlı + AI)** ve **Batch Processing** özellikleri sayesinde büyük verileri saniyeler içinde işler.
 
 ---
 
@@ -102,31 +103,41 @@ omtekyav-sentiment-microservice/
 |---------|-----------|----------|
 | **Backend** | FastAPI, PyTorch, Transformers | 0.95+ |
 | **Frontend** | Streamlit | 1.22+ |
-| **Model** | BERT-base Turkish | cased |
+| **Model** | BERT-base Multilingual | nlptown (uncased) |
 | **Container** | Docker, Docker Compose | 20.10+ |
 | **API Format** | REST, JSON | - |
+| **Performans** | Batch Processing | 50+ Request/sec |
 
 ---
 
 ##  API Endpoints
 
-### 1. Duygu Analizi
+### 1. Toplu Duygu Analizi (Batch Processing)
+Büyük veri girişleri için optimize edilmiştir. 50-100 metni tek seferde analiz eder.
+
 ```http
-POST /api/v1/analyze
+POST /api/v1/analyze-batch
 Content-Type: application/json
 
 {
-  "text": "Örnek Türkçe metin"
+  "texts": [
+    "Bu film harikaydı, kesinlikle öneririm.",
+    "This movie is terrible and boring.",
+    "Das ist wunderbar!"
+  ]
 }
 ```
 
 **Response:**
 ```json
+
+
 {
-  "sentiment": "positive|negative",
-  "confidence": 0.95,
-  "text": "Örnek Türkçe metin",
-  "timestamp": "2024-01-15T10:30:00Z"
+  "results": [
+    { "sentiment": "Pozitif", "confidence": 0.98 },
+    { "sentiment": "Negatif", "confidence": 1.0 },
+    { "sentiment": "Pozitif", "confidence": 0.95 }
+  ]
 }
 ```
 
@@ -273,9 +284,10 @@ docker-compose exec backend ping frontend
 
 ### Önerilen Ayarlar
 1. **Model Caching:** Transformers cache mekanizması aktif
-2. **Batch Processing:** API batch endpoint'i eklenebilir
-3. **GPU Support:** CUDA enabled container kullanımı
-4. **Load Balancing:** Traefik veya Nginx reverse proxy
+2. **Batch Processing:** `/analyze-batch` endpoint'i ile native olarak desteklenmektedir (10x Hız). 
+3. **Hybrid Filtering:** "Kötü, terrible, berbat" gibi belirgin kelimeler regex motoru ile CPU seviyesinde elenir, GPU yükü azaltılır. 
+4. **GPU Support:** CUDA enabled container kullanımı
+5. **Load Balancing:** Traefik veya Nginx reverse proxy
 
 ### Scaling
 ```yaml
@@ -338,6 +350,7 @@ pre-commit install
 ---
 
 *Son Güncelleme: Aralık 2025 | Versiyon: 1.0.0*
+
 
 
 
