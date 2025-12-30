@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile
     container_name: sentiment-backend
     ports:
-      - "8000:8000"
+      - "8001:8000"
     networks:
       - sentiment-net
     # Konteyner her kapandığında otomatik yeniden başlasın mı? (Opsiyonel)
